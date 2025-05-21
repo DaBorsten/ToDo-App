@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+
+group = 'org.todo'
+version = '1.0.0'
+
+application {
+    mainClass = 'org.todo.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.49.0.0'
+    implementation 'com.formdev:flatlaf:3.5.4'
+    implementation 'io.github.dj-raven:swing-datetime-picker:2.0.0'
+    implementation 'org.knowm.xchart:xchart:3.8.8'
+    implementation 'org.knowm.xchart:xchart-demo:3.8.8'
+}
+
+tasks.register('runMain', JavaExec) {
+    group = 'Application'
+    mainClass = 'org.todo.Main'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+shadowJar {
+    archiveBaseName.set('ToDo-App')
+    archiveVersion.set('1.0.0')
+    archiveClassifier.set(null)
+    manifest {
+        attributes 'Main-Class': 'org.todo.Main'
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
